@@ -1,0 +1,108 @@
+﻿@model List<DataAccessLayer.Entities.OrganizationMember>
+
+@{
+
+    var Org_Id = (int)ViewData["Organizer_Id"];
+    var userlist = (List<DataAccessLayer.Entities.User>)ViewData["Userlar"];
+
+    DataAccessLayer.DbOrganization db = new DataAccessLayer.DbOrganization();
+
+    var Organizasyon = db.Organizations.Find(Org_Id);
+    var tarih = Organizasyon.OrgDate;
+
+    int yetkiliMi = 1;
+    if (Session["UserLogin"] != null)
+    {
+        yetkiliMi = ((DataAccessLayer.Entities.User)Session["UserLogin"]).UserType;
+    }
+}
+
+<div id="asd123">
+
+    <h3 style="text-align:center">Organizasyona Katılanlar:</h3>
+
+    @if (yetkiliMi == 0 && DateTime.Now<tarih)
+    {
+
+        <form method="post" action="/Home/UserEkleOrga/" id="frm1">
+            <div>
+                Ekle:
+                <input type="hidden" value="@Org_Id" name="Org_Id" id="Org_Id" />
+                <select class="form-control" id="User_Id" name="User_Id">
+
+                    @foreach (var item in userlist)
+                    {
+                        <option id="@item.Id" value="@item.Id">@item.Id)  **@item.UserName**</option>
+                    }
+
+                </select>
+            </div>
+            <br />
+            <div>
+                <input type="button" value="Gönder" onclick="SendMyAjax()" />
+            </div>
+        </form>
+    }
+    <br /><br />
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>Age</th>
+                <th>Organizasyon ADI</th>
+                @if (yetkiliMi == 0 && DateTime.Now < tarih)
+                {
+                    <th>Properties</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Users.UserName</td>
+                    <td>@item.Users.Age</td>
+                    <td>@item.Organization.Name</td>
+
+                    @if (yetkiliMi == 0 && DateTime.Now < tarih)
+                    {
+                        <td>
+
+                            <input type="button" name="button" value="Sil" onclick="Kaldir(@item.Users.Id)" />
+                        </td>
+                    }
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    function SendMyAjax() {
+        $.post("UserEkleOrga", {
+            User_Id: $('#User_Id').val(),
+            Org_Id: $('#Org_Id').val(),
+        },
+            function (data) {
+                alert("işlem tamamlandı");
+                $('#ajax_id').load("/Home/OrganizationMemberList?id=@Org_Id");
+            })
+    }
+
+     function Kaldir(aa) {
+        $.post(
+            "Kaldir", {
+                User_Id: aa,
+                Org_Id: $('#Org_Id').val(),
+            },
+            function () {
+                alert("Seçili Eleman Listeden Kaldırıldı!");
+                $('#ajax_id').load("/Home/OrganizationMemberList?id=@Org_Id");
+            }
+            )
+    }
+
+</script>

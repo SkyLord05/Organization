@@ -1,0 +1,81 @@
+﻿@model DataAccessLayer.Entities.Organization
+
+@{
+    ViewBag.Title = "OrganizationDetails";
+
+    string Modelname = Model.Name.ToUpper();
+
+}
+
+<h1 style="text-align:center">@Modelname</h1>
+<hr />
+<div class="row" style="margin-bottom:50px">
+    <div class="container">
+        <div>
+            <div class="col-lg-6 col-md-6 col-sm-6 " style="height:300px">
+                <img src="~/images/@Model.ImageUrl" class="img-thumbnail" alt="@Model.ImageUrl" width="500" height="300">
+            </div>
+        </div>
+        <div>
+            <div class="col-lg-6 col-md-6 col-sm-6" style="height:300px;padding-top:100px;">
+                <dl class="dl-horizontal">
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OrgDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.OrgDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Place)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Place)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Organizer)
+                    </dt>
+
+                    <dd>
+                        *\*@Html.DisplayFor(model => model.Organizer.UserName)*/*
+                    </dd>
+
+
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <p>
+
+        @Html.ActionLink("Back to List", "Organizasyonlar")
+    </p>
+</div>
+<br><br>
+
+<br><br>
+
+@if (Model.OrgDate > DateTime.Now)
+{
+    <div id="ajax_id">
+        @Html.Action("OrganizationMemberList", new { id = Model.Id })
+    </div>
+}
+else
+{
+    <div id="yorumdiv">
+        @Html.Action("BitenOrganizasyonPartial", new { id = Model.Id })
+    </div>  
+}

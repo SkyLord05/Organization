@@ -6,7 +6,20 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+    <style>
+        /* Add a gray background color and some padding to the footer */
+        footer {
+            background-color: #f2f2f2;
+            padding: 5px,5px,3px,3px;
+            text-align: center;
+        }
+    </style>
+  
 </head>
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -16,14 +29,32 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Best Organization Company", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Anasayfa", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Planlanan Organizasyonlarımız", "Organizasyonlar", "Home")</li>
+                    <li>@Html.ActionLink("Üyelerimiz", "Memberlar", "Home")</li>
+                    <li>@Html.ActionLink("Bitmiş Organizasyonlar", "BitenOrganizasyonlar", "Home")</li>
                 </ul>
+                @if (Session["UserLogin"] == null)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/Home/Login/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/User/UserDetail/@(((DataAccessLayer.Entities.User)Session["UserLogin"]).Id)">
+                            @(((DataAccessLayer.Entities.User)Session["UserLogin"]).UserName)</a> 
+                        </li><li>
+                            <a href="/Home/Logout/"> <span class="glyphicon glyphicon-log-out"></span></a>
+                        </li>
+                    </ul>
+                }
+
             </div>
         </div>
     </div>
@@ -31,7 +62,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Lord Of ORGANIZATIONS</p>
         </footer>
     </div>
 

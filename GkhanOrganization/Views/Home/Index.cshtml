@@ -1,31 +1,62 @@
-﻿@{
+﻿@model List<DataAccessLayer.Entities.Organization>
+
+@{
     ViewBag.Title = "Home Page";
+
+    List<DataAccessLayer.Entities.Organization> asd = new List<DataAccessLayer.Entities.Organization>();
+    List<DataAccessLayer.Entities.Organization> qwe = new List<DataAccessLayer.Entities.Organization>();
+    for (int i = 0; i < 4; i++)
+    {
+        asd.Add(Model[i]);
+    }
+
+    for (int i = 4; i < 8; i++)
+    {
+        qwe.Add(Model[i]);
+    }
+
 }
 
+
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <div class="container text-center">
+        <h1>LORD OF GOKHAN</h1>
+        <p>Everything is Possible if you Believe!!..</p>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="container-fluid bg-3 text-center">
+    <h3 style="color:#e22e2e;background-color:antiquewhite;border-radius:5px;">YAKLAŞAN ETKİNLİKLERİMİZ</h3><br>
+    <div class="row">
+        @foreach (var item in asd)
+        {
+            <div class="col-sm-3">
+                <a href="/Home/OrganizationDetails?id=@item.Id">
+                    <p>@item.Name.ToUpper() (@item.OrgDate.ToString("dd/MM/yyyy"))</p>
+                    <img src="~/images/@item.ImageUrl" class="img-responsive" style="width:100%" alt="@item.ImageUrl">
+                </a>
+            </div>
+        }
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+</div><br>
+@if (Model.Count() > 7)
+{
+    <div class="container-fluid bg-3 text-center">
+        <div class="row">
+
+            @foreach (var item in qwe)
+            {
+                <div class="col-sm-3">
+                    <a href="/Home/OrganizationDetails?id=@item.Id">
+                        <p>@item.Name.ToUpper() (@item.OrgDate.ToString("dd/MM/yyyy"))</p>
+                        <img src="~/images/@item.ImageUrl" class="img-responsive" style="width:100%" alt="@item.ImageUrl">
+                    </a>
+                </div>
+            }
+
+        </div>
+    </div><br><br>
+}
+
+

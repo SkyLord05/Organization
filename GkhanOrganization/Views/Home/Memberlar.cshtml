@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DataAccessLayer.Entities.User>
+
+@{
+    ViewBag.Title = "Memberlar";
+
+    int yetkiliMi = 1;
+    if (Session["UserLogin"] != null)
+    {
+        yetkiliMi = ((DataAccessLayer.Entities.User)Session["UserLogin"]).UserType;
+    }
+    string normal = "Normal";
+    string admin = "Admin";
+}
+
+<h2>Memberlar</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserType)
+        </th>
+        @if (yetkiliMi == 0)
+        {
+            <th>Properties</th>
+        }
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td>
+            <div>
+               @if (item.UserType==1)
+               {
+                   @normal;
+               }
+               else
+               {
+                   @admin; 
+               }
+            </div>
+        </td>
+        @if (yetkiliMi == 0)
+        {
+            <td>
+                @Html.ActionLink("Edit", "UserEdit", "User", new { id = item.Id }, new { }) |
+                @Html.ActionLink("Details", "UserDetail","User", new { id=item.Id },new { }) |
+                @Html.ActionLink("Delete", "UserDelete", "User", new { id = item.Id }, new { })
+            </td>
+        }
+
+    </tr>
+    }
+
+</table>

@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GkhanOrganization", "GkhanOrganization\GkhanOrganization.csproj", "{7E1EED08-AD9F-4CB2-A09F-262F8F814154}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{D40A8FE6-A804-474B-BFF4-235E207FB5DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7E1EED08-AD9F-4CB2-A09F-262F8F814154}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E1EED08-AD9F-4CB2-A09F-262F8F814154}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E1EED08-AD9F-4CB2-A09F-262F8F814154}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40A8FE6-A804-474B-BFF4-235E207FB5DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40A8FE6-A804-474B-BFF4-235E207FB5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40A8FE6-A804-474B-BFF4-235E207FB5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40A8FE6-A804-474B-BFF4-235E207FB5DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

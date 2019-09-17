@@ -1,0 +1,84 @@
+﻿@model IEnumerable<DataAccessLayer.Entities.Organization>
+
+@{
+    ViewBag.Title = @"~Biten Organizasyonlar~";
+    int yetkiliMi = 1;
+    if (Session["UserLogin"] != null)
+    {
+        yetkiliMi = ((DataAccessLayer.Entities.User)Session["UserLogin"]).UserType;
+    }
+
+}
+
+<h2 style="text-align:center;color:#e53131">@ViewBag.Title</h2>
+<hr />
+<p>
+    <a href="/Home/OrganizasyonAdd/" class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-plus"></span> New
+    </a>
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrgDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Place)
+        </th>
+        @if (yetkiliMi == 0)
+        {
+            <th>Properties</th>
+        }
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="~/images/@item.ImageUrl" class="img-circle" alt="@item.ImageUrl" width="50" height="30" />
+
+            </td>
+            <td>
+                <a href="/Home/OrganizationDetails/@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrgDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place)
+            </td>
+            @if (yetkiliMi == 0)
+            {
+                <td>
+
+                    <a title="Edit" href="/Home/OrganizationEdit?id=@item.Id"><span class="glyphicon">&#x270f;</span></a>
+                    |
+                    <a title="Details" href="/Home/OrganizationDetails?id=@item.Id">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    |
+                    <a title="Delete" href="/Home/DeleteOrganization?id=@item.Id">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+
+                </td>
+            }
+
+        </tr>
+    }
+
+</table>

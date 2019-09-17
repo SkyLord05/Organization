@@ -1,0 +1,78 @@
+﻿@model List<DataAccessLayer.Entities.OrganizationMember>
+
+@{
+    int Org_id = (int)ViewData["Org_Id"];
+    List<DataAccessLayer.Entities.Comment> liste = (List<DataAccessLayer.Entities.Comment>)ViewData["CommentList"];
+    int User_id =((DataAccessLayer.Entities.User)Session["UserLogin"]).Id;
+}
+
+<div id="asd123">
+
+    <h3 style="text-align:center">Organizasyona Katılanlar:</h3>
+
+    <br /><br />
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>Age</th>
+                <th>Organizasyon ADI</th>
+                
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Users.UserName</td>
+                    <td>@item.Users.Age</td>
+                    <td>@item.Organization.Name</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+<br />
+<div>
+    <h3>Yorumlar</h3>
+    <table class="table">
+        @foreach (var item in liste)
+        {
+            <tr class="success">
+                <td width="600">- @item.Yorum </td>
+                <td width="50" class="danger"> @item.UserYorum.UserName </td>
+                <td width="50" class="info"> @item.YorumTime </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<div >
+    <textarea rows="4" cols="500" title="yorum yaz" name="textname" id="textname" class="form-control"></textarea>
+</div>
+<br />
+<div>
+    <input class="btn btn-primary" style="margin-left:210px" type="button" name="button" value="Gönder" onclick="YorumEkle(@User_id)" />
+</div>
+
+<script>
+    function YorumEkle(asd) {
+        $.post(
+            "/Home/YorumEkle",
+            {
+                comment: $('#textname').val(),
+                User_id: asd,
+                Org_Id: @Org_id,
+            },
+            function () {
+                alert('Yorum basarılı'),
+                    $('#yorumdiv').load("/Home/BitenOrganizasyonPartial/@Org_id")
+            }
+        )
+    }
+
+</script>
